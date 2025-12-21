@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TradeGuard – Smart Risk Manager</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Splash Screen -->
+  <div id="splash">
+    <div class="splash-inner">
+      <h1>Welcome to <span class="brand">TradeGuard</span></h1>
+      <p>Your Smart Risk Management Calculator for Forex & CFDs.</p>
+      <p class="tag">Plan your trade • Manage your risk • Trade with confidence</p>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app" class="hidden">
+    <header class="topbar">
+      <button id="backBtn" class="back hidden" aria-label="Back to Dashboard">←</button>
+      <h2 id="viewTitle">TradeGuard Dashboard</h2>
+    </header>
+
+    <main class="container">
+      <!-- Dashboard -->
+      <section id="view-dashboard">
+        <p class="muted">Choose what you want to calculate today:</p>
+        <div class="grid">
+          <button class="card" data-goto="view-risk">
+            <h3>Risk & Position Size</h3>
+            <p>Lot size, risk $, SL pips, TP suggestion</p>
+          </button>
+          <button class="card" data-goto="view-sltp">
+            <h3>SL/TP from Entry</h3>
+            <p>Compute exact SL & TP prices</p>
+          </button>
+          <button class="card" data-goto="view-rr">
+            <h3>Risk–Reward</h3>
+            <p>R:R from entry/SL/TP</p>
+          </button>
+        </div>
+      </section>
+
+      <!-- Risk & Position Size -->
+      <section id="view-risk" class="hidden">
+        <form id="form-risk" class="card form">
+          <h3>Risk & Position Size</h3>
+          <div class="row">
+            <label>Account Balance ($)
+              <input type="number" id="r-balance" min="0" step="0.01" required />
+            </label>
+            <label>Risk % per trade
+              <input type="number" id="r-riskpct" min="0" step="0.01" value="1" required />
+            </label>
+          </div>
+          <div class="row">
+            <label>Direction
+              <select id="r-direction">
+                <option value="buy">Buy (Long)</option>
+                <option value="sell">Sell (Short)</option>
+              </select>
+            </label>
+            <label>Pip Size
+              <select id="r-pipsize">
+                <option value="0.0001">0.0001 (most FX)</option>
+                <option value="0.01">0.01 (JPY pairs)</option>
+                <option value="0.1">0.1 (indices/metals – adjust)</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Entry Price
+              <input type="number" id="r-entry" step="0.00001" required />
+            </label>
+            <label>Stop Loss Price
+              <input type="number" id="r-slprice" step="0.00001" required />
+            </label>
+          </div>
+          <div class="row">
+            <label>Reward Multiple (R)
+              <input type="number" id="r-rr" min="0" step="0.01" value="2" />
+            </label>
+            <label>Pip Value per 1.00 lot ($/pip)
+              <input type="number" id="r-pipvalue" min="0" step="0.01" value="10" />
+            </label>
+          </div>
+          <button type="submit" class="primary">Calculate</button>
+          <div id="r-result" class="result"></div>
+        </form>
+      </section>
+
+      <!-- SL/TP from Entry -->
+      <section id="view-sltp" class="hidden">
+        <form id="form-sltp" class="card form">
+          <h3>SL/TP Prices from Entry</h3>
+          <div class="row">
+            <label>Direction
+              <select id="st-direction">
+                <option value="buy">Buy (Long)</option>
+                <option value="sell">Sell (Short)</option>
+              </select>
+            </label>
+            <label>Pip Size
+              <select id="st-pipsize">
+                <option value="0.0001">0.0001 (most FX)</option>
+                <option value="0.01">0.01 (JPY pairs)</option>
+                <option value="0.1">0.1 (indices/metals – adjust)</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Entry Price
+              <input type="number" id="st-entry" step="0.00001" required />
+            </label>
+            <label>SL Distance (pips)
+              <input type="number" id="st-slpips" min="0" step="0.1" required />
+            </label>
+          </div>
+          <div class="row">
+            <label>Reward Multiple (R)
+              <input type="number" id="st-rr" min="0" step="0.01" value="2" />
+            </label>
+          </div>
+          <button type="submit" class="primary">Calculate</button>
+          <div id="st-result" class="result"></div>
+        </form>
+      </section>
+
+      <!-- Risk–Reward Calculator -->
+      <section id="view-rr" class="hidden">
+        <form id="form-rr" class="card form">
+          <h3>Risk–Reward from Prices</h3>
+          <div class="row">
+            <label>Pip Size
+              <select id="rr-pipsize">
+                <option value="0.0001">0.0001 (most FX)</option>
+                <option value="0.01">0.01 (JPY pairs)</option>
+                <option value="0.1">0.1 (indices/metals – adjust)</option>
+              </select>
+            </label>
+            <label>Direction
+              <select id="rr-direction">
+                <option value="buy">Buy (Long)</option>
+                <option value="sell">Sell (Short)</option>
+              </select>
+            </label>
+          </div>
+          <div class="row">
+            <label>Entry Price
+              <input type="number" id="rr-entry" step="0.00001" required />
+            </label>
+            <label>Stop Loss Price
+              <input type="number" id="rr-slprice" step="0.00001" required />
+            </label>
+          </div>
+          <div class="row">
+            <label>Take Profit Price
+              <input type="number" id="rr-tpprice" step="0.00001" required />
+            </label>
+          </div>
+          <button type="submit" class="primary">Calculate</button>
+          <div id="rr-result" class="result"></div>
+        </form>
+      </section>
+
+      <footer class="footer">
+        <small>Trading forex & CFDs involves significant risk. Nothing here is financial advice. Use at your own discretion.</small>
+      </footer>
+    </main>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
+<script>
+  
