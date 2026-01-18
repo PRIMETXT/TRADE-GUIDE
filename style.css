@@ -1,6 +1,6 @@
 :root{
-  --bg:#051406; --panel:#071707; --muted:#8b949e; --text:#e6edf3;
-  --brand:#22c55e; --brand-2:#16a34a; --border:#e3e8ef; --card:#0d1117;
+  --bg:#04074f; --panel:#19096e; --muted:#8b949e; --text:#e6edf3;
+  --brand:#1d17ce; --brand-2:#16a34a; --border:#e3e8ef; --card:#0d1117;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
@@ -77,3 +77,4 @@ input:focus, select:focus{ border-color:var(--brand) }
 
 /* Animations */
 @keyframes fadeIn{ from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none} }
+
